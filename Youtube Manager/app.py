@@ -4,7 +4,8 @@ def load_data(): #data load ek file se hoga!!
     try:
         with open("utube.txt", 'r') as file:
             return json.load(file)
-    
+            #this statement json.load(file), reads data from a specofc file and parses into python object, dictonary or list
+            #it doesnt print anything it return the parsed python object containing json data
     except FileNotFoundError:
         print("File not found!!")
         return []
@@ -16,10 +17,15 @@ def save_data_helper(videos):
 
 # this will show all the videao makred fav by the user
 def all_videos(videos):
+    # for index, vid in enumerate(videos, start=1):
+    #     return print(f"{index}-->. {vid['video name']} {vid['video duration']} {vid['Vid URL']}")
+    # print(videos)
+    print('\n')
+    print('*'*80)
     for index, vid in enumerate(videos, start=1):
-        return print(f"{index}. {vid['video name']} {vid['video duration']} {vid['Vid URL']}")
-    print(videos)
-
+        
+        print(f"{index}. {vid['video name']} {vid['video duration']} {vid['Vid URL']}")
+    print('*'*80)
 #this will tell the duration of the youtube video
 def durn_of_vid(videos):
     pass
