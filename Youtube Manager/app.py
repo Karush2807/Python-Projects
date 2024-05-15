@@ -3,7 +3,7 @@ import json
 def load_data(): #data load ek file se hoga!!
     try:
         with open("utube.txt", 'r') as file:
-            return print(json.load(file))
+            return json.load(file)
     
     except FileNotFoundError:
         print("File not found!!")
