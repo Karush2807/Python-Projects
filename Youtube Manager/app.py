@@ -32,7 +32,21 @@ def durn_of_vid(videos):
 
 #this will update the video details
 def updt_vid(videos):
-    pass
+    all_videos(videos)
+    input_index=int(input("enter which index u want to update: "))
+    if 1<=input_index<=len(videos):
+        n_name=input("enter the new name: ")
+        n_duration=input("enter the new duration:")
+        n_link=input("enter the new link:")
+
+        videos[input_index-1]={'name':n_name, 'duration':n_duration,
+        'link':n_link}
+        save_data_helper(videos)
+
+    else:
+        print("Invalid index selected!!")
+
+
 
 #this will add a video to the list
 def add_vid(videos):
@@ -44,11 +58,19 @@ def add_vid(videos):
 
 #this will search the video
 def search_vid(videos):
-    pass
+    find_index=int(input("enter the index u need to search: "))
+    if 1<=find_index<=len(videos):
+        print(f"Video name: {videos[find_index-1]['video name']}")
+        print(f"Video Duration: {videos[find_index-1]['video duration']}")
 
 #this will delete the video
 def del_vid(videos):
-    pass
+    del_index=int(input("enter the index u want to delete:"))
+    if 1<=del_index<=len(videos):
+        del videos[del_index-1] #synatx for deleting an element from a list
+        save_data_helper(videos)
+    else:
+        print("invalid index selected!!")
 
 #this will exit the program
 def exit():
