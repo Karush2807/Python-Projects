@@ -1,4 +1,5 @@
 import pymongo
+from bson import ObjectId
 
 client= pymongo.MongoClient("mongodb+srv://nigga2807:244466666@youtubemanager.8ssqukg.mongodb.net/")
 #not a good practice to hardcode the password
@@ -10,26 +11,28 @@ video_collection=db['videos']
 print(video_collection)
 
 def add_videos(name, time):
-    video_collection.insert_one({'Video Name':name,'Video Time':time})
+    video_collection.insert_one({'name':name,'time':time})
 
 def list_videos():
     for video in video_collection.find():
-        print(f"ID: {video['_id']}, Video Name: {video['Video Name']}, Time: {video['Video Time']}")
+        print(
+            f"ID: {video['_id']}, "
+            f"Video name: {video['Video Name']}, "  # Assuming 'Name' is the correct field name
+            f"Time: {video['Video Time']}"  # Assuming 'Time' is the correct field name
+        )
 
-def update_video(vid_id, new_name, new_time):
-    result=video_collection.update_one(
-        {'_id':vid_id},
-        {"$set": {'Name':new_name, 'Time':new_time}}
+def update_video(video_id, new_name, new_time):
+    video_collection.update_one(
+    {'_id': ObjectId(video_id)},
+    {"$set": {"name": new_name, "time": new_time}}
     )
-    if result.matched_count > 0:
-        print("Video updated successfully.")
-    else:
-        print("No video found with the given ID.")
+    
     
 
 def delete_video(vid_id):
-    video_collection.delete_one({'_id':vid_id})
-    pass
+    video_collection.delete_one(
+        {'_id':ObjectId(vid_id)})
+
 
 def exit():
     pass
