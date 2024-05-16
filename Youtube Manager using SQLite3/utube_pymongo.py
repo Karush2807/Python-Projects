@@ -3,7 +3,68 @@ import pymongo
 client= pymongo.MongoClient("mongodb+srv://nigga2807:244466666@youtubemanager.8ssqukg.mongodb.net/")
 #not a good practice to hardcode the password
 
-db=client['youtubemanager']
+print(client)
+db=client['youtubemanager'] #database created
 video_collection=db['videos']
 
-print(video_collection.find_one())
+print(video_collection)
+
+def add_videos(name, time):
+    video_collection.insert_one({'Video Name':name,'Video Time':time})
+
+def list_videos():
+    for video in video_collection.find():
+        print(f"ID: {video['_id']}, Video Name: {video['Video Name']}, Time: {video['Video Time']}")
+
+def update_video(vid_id, new_name, new_time):
+    result=video_collection.update_one(
+        {'_id':vid_id},
+        {"$set": {'Name':new_name, 'Time':new_time}}
+    )
+    if result.matched_count > 0:
+        print("Video updated successfully.")
+    else:
+        print("No video found with the given ID.")
+    
+
+def delete_video(vid_id):
+    video_collection.delete_one({'_id':vid_id})
+    pass
+
+def exit():
+    pass
+
+def main():
+    while True:
+        print("\n UTube Manager!!")
+        print("1. List ALL Videos")
+        print("2. ADD Video")
+        print("3. Update Video")
+        print("4. Delete Video")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice =='1':
+            list_videos()
+
+        elif choice =='2':
+            name=input("Enter the name of the video: ")
+            time=input("Enter the time of the video: ")
+            add_videos(name, time)
+        
+        elif choice =='3':
+            vid_id=input("Enter the  video id: ")
+            nname=input("Enter the  updated name of the video: ")
+            ntime=input("Enter the  updated time of the video: ")
+
+            update_video(vid_id, nname, ntime)
+
+        elif choice == '4':
+            vid_id=input("Enter the video id to be deleted: ")
+            delete_video(vid_id)
+        
+        else:
+            break
+
+if __name__ == '__main__':
+    main()
